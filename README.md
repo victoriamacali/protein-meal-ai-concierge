@@ -30,25 +30,13 @@ tool wiring) fabricated a plausible-sounding recipe with made-up protein and
 price figures. The architecture below exists specifically to prevent that.
 
 ## Architecture
-User prompt
-│
-▼
-┌─────────────────────────┐
-│  ADK Agent               │
-│  (protein_meal_concierge)│
-└─────────────────────────┘
-│
-├──► MCP Tool: lookup_recipes(have_ingredients)
-│     → runs on a separate local MCP server (recipe_server.py)
-│     → returns a candidate recipe + protein/price data per ingredient
-│
-├──► Guardrail Tool: check_protein_density(ingredients, min_protein_g)
-│     → sums real protein data, flags if under target
-│     → agent must revise the plan and re-check if it fails
-│
-└──► Guardrail Tool: check_budget(grocery_list, max_budget)
-→ sums real price data, flags if over budget
-→ agent must substitute/trim and re-check if it fails
+```mermaid
+flowchart TD
+    A[User prompt] --> B["ADK Agent(protein_meal_concierge)"]
+    B --> C["MCP Tool: lookup_recipes(have_ingredients)runs on local MCP server (recipe_server.py)returns candidate recipe + protein/price data"]
+    B --> D["Guardrail Tool: check_protein_density(ingredients, min_protein_g)sums real protein data, flags if under targetagent revises plan and re-checks if it fails"]
+    B --> E["Guardrail Tool: check_budget(grocery_list, max_budget)sums real price data, flags if over budgetagent substitutes/trims and re-checks if it fails"]
+```
 
 **Why MCP for the recipe lookup specifically:** it keeps ingredient/nutrition
 data as a separately runnable service rather than baked into the agent's own

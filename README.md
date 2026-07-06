@@ -1,16 +1,51 @@
 # Protein Meal Concierge
 
-An AI agent that turns "here's what's in my kitchen" into a protein-optimized
-meal plan and a budget-capped grocery list — built for the *AI Agents:
-Intensive Vibe Coding* capstone (Concierge Agents track).
+An AI-powered concierge agent that transforms the ingredients already in your kitchen into a protein-optimized meal plan 
+and budget-conscious grocery list using verified tool calls—not AI guesses.— built for the 
+*AI Agents: Intensive Vibe Coding* capstone (Concierge Agents track).
+
+## The Story 
+The Story
+
+Imagine you've just finished an intense lifting session. You're exhausted, hungry, and realize you completely forgot to meal prep for the week.
+
+As you're driving home, you pass your favorite burger restaurant. The smell is incredible. You think, "A burger has protein...that's good enough, right?"
+
+Maybe—but after adding fries, a drink, and the extra calories hidden in sauces and toppings, you've likely exceeded both your nutrition goals and your budget before even getting home.
+
+Instead of making an impulse decision while tired and hungry, you open Protein Meal Concierge.
+
+You tell it:
+
+what ingredients you already have
+how much protein you want to eat
+your grocery budget
+
+Within seconds, the agent recommends a meal built around what you already own, verifies that it actually meets your protein target, generates a grocery list containing only the missing ingredients, and ensures everything stays within your budget.
+
+The goal isn't simply generating recipes.
+
+The goal is helping users make healthier, smarter decisions when they're most likely to make poor ones.
 
 ## Problem
 
-Most meal-planning tools optimize for variety, convenience, or general
-"healthy eating" — not for a specific, measurable macro target. People
-trying to hit a protein goal (strength training, recovery, general fitness)
-still have to manually check nutrition labels, do the math themselves, and
-separately worry about staying within budget when buying extra ingredients.
+Traditional meal-planning applications focus on:
+
+healthy eating
+convenience
+variety
+
+Few actually optimize around measurable fitness goals like protein intake while also respecting a grocery budget.
+
+People trying to build muscle or simply eat more protein often end up manually:
+
+calculating macros
+checking nutrition labels
+comparing grocery prices
+deciding what ingredients they still need
+
+This process is repetitive, time-consuming, and easy to abandon when you're hungry.
+
 
 ## Solution
 
@@ -28,6 +63,22 @@ The key design goal: **the agent never just claims a number is correct — it
 calls a tool to check.** Early in development, the agent (without proper
 tool wiring) fabricated a plausible-sounding recipe with made-up protein and
 price figures. The architecture below exists specifically to prevent that.
+
+## How is this an AI Agent
+
+Protein Meal Concierge demonstrates several characteristics of an AI agent rather than a simple chatbot.
+
+✅ Reasons over multiple user constraints
+
+✅ Uses external tools to gather information
+
+✅ Validates intermediate results
+
+✅ Revises its plan when constraints fail
+
+✅ Returns only verified recommendations
+
+Rather than producing a single response, the agent continuously reasons until all requirements have been satisfied.
 
 ## Architecture
 ```mermaid
@@ -55,6 +106,15 @@ separate tools makes the failure mode explicit in the trace (you can see
 - **Model Context Protocol** (`mcp`) — local recipe/nutrition lookup server
 - **Gemini** (`gemini-2.5-flash` / `gemini-flash-latest`) — underlying LLM
 - **Antigravity IDE/CLI** — used for local development and testing (see demo video)
+
+## Repository Structure
+protein-meal-ai-concierge/
+
+├── agent_app/
+├── recipe_server.py
+├── requirements.txt
+├── README.md
+└── .env
 
 ## Setup
 
@@ -91,6 +151,17 @@ Grocery list (missing ingredients only):
 Parmesan: $0.80
 Total cost: $0.80 (within $15.00 budget)
 
+## Lessons Learned
+Lessons Learned
+
+During early development, the language model confidently generated plausible-looking protein totals 
+and grocery prices without evidence.
+
+This project reinforced an important principle of agent engineering:
+
+Language models are excellent reasoning engines, but factual claims should be verified through external tools whenever possible.
+
+That realization directly motivated the verification-first architecture used throughout this project.
 
 ## Security / Guardrails
 
@@ -100,16 +171,22 @@ Total cost: $0.80 (within $15.00 budget)
   the agent must pass before presenting a final plan
 - API keys are kept in `.env`, excluded from version control via `.gitignore`
 
-## Known limitations / future work
+## Known limitations / Future Work
 
+_ Does not currently optimize calories, carbohydrates, or fats.
 - Ingredient/nutrition data is a small static lookup table for demo purposes
   — a production version would call a real nutrition API via the same MCP
   interface with no agent-side changes needed
 - No persistent memory of user preferences across sessions (yet) — each
   session starts fresh
 - No live deployment; runs locally via Antigravity/ADK CLI
+- USDA FoodData Central integration
+- Multi-day meal planning
+- Barcode scanning
 
 ## Track
 
 Concierge Agents — automating a daily personal task (deciding what to eat
 and what to buy) using tool-verified, constraint-driven agent reasoning.
+
+Protein Meal Concierge demonstrates how AI agents can move beyond conversation by combining reasoning, external tools, and verification to help users make healthier, budget-conscious decisions with confidence.

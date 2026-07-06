@@ -4,6 +4,12 @@ An AI-powered concierge agent that transforms the ingredients already in your ki
 and budget-conscious grocery list using verified tool calls—not AI guesses.— built for the 
 *AI Agents: Intensive Vibe Coding* capstone (Concierge Agents track).
 
+## Demo
+
+Here’s a quick walkthrough of the Protein Meal Concierge in action:
+
+![Protein Meal Concierge Demo](media/ai-agent-lettuceprompt.gif)
+
 ## The Story 
 The Story
 

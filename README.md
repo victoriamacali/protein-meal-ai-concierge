@@ -8,7 +8,7 @@ and budget-conscious grocery list using verified tool calls—not AI guesses.—
 
 Here’s a quick walkthrough of the Protein Meal Concierge in action:
 
-![Protein Meal Concierge Demo](media/demo-lettuce-prompt.gif)
+![Protein Meal Concierge Demo](media/demo-lettuce-full-prompt.gif)
 
 ## The Story 
 The Story

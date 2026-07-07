@@ -148,14 +148,24 @@ adk web agent_app
 ```
 
 ## Example interaction
-[user]: I have pasta and ground beef, I want a meal with 25-35 grams of
-protein, keep extra ingredients under $15
-[protein_meal_concierge]: Recipe: Beef & Pasta Skillet
-Total protein: 41g (target: 25-35g ✓)
-Grocery list (missing ingredients only):
+```bash
+$ adk run agent_app
+[user]: I have lettuce. Give me a protein-rich meal.
 
-Parmesan: $0.80
-Total cost: $0.80 (within $15.00 budget)
+[protein_meal_concierge]:
+Recipe: Protein-Boosted Skillet
+
+Total protein: 67g
+Total estimated cost: $9.50
+
+Grocery list (missing ingredients to buy):
+  - Chicken breast: $3.50
+  - Ground beef: $5.00
+  - Greek yogurt: $1.00
+
+Combines lean chicken breast, ground beef, and Greek yogurt (as a
+high-protein sauce base) served over or wrapped in lettuce.
+```
 
 ## Lessons Learned
 Lessons Learned
